@@ -1,9 +1,10 @@
 import asyncio
+from dotenv import load_dotenv 
 import logging
 import signal
 import sys
-from os import environ
-from dotenv import load_dotenv 
+from os import getenv
+from typing import cast
 
 from aiogram import Bot, Dispatcher, html
 from aiogram.client.default import DefaultBotProperties
@@ -13,7 +14,11 @@ from aiogram.types import Message
 
 load_dotenv()
 
-TOKEN = environ["BOT_TOKEN"]
+TOKEN = getenv("BOT_TOKEN")
+if TOKEN is None:
+    raise ValueError("BOT_TOKEN environment variable is not set")
+
+
 dp = Dispatcher()
 
 
@@ -37,7 +42,7 @@ async def echo_handler(message: Message) -> None:
 
 async def main() -> None:
     # Initialize Bot instance with default bot properties which will be passed to all API calls
-    bot = Bot(token=TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
+    bot = Bot(token=cast(str,TOKEN), default=DefaultBotProperties(parse_mode=ParseMode.HTML))
 
     # And the run events dispatching
     await dp.start_polling(bot) 
