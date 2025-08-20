@@ -22,9 +22,7 @@ TOKEN = getenv("BOT_TOKEN")
 if TOKEN is None:
     raise ValueError("BOT_TOKEN environment variable is not set")
 
-
 dp = Dispatcher()
-
 
 @dp.message(CommandStart())
 async def command_start_handler(message: Message) -> None:
