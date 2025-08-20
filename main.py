@@ -1,13 +1,17 @@
 import asyncio
 import logging
+import signal
 import sys
 from os import environ
+from dotenv import load_dotenv 
 
 from aiogram import Bot, Dispatcher, html
 from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
 from aiogram.filters import CommandStart
 from aiogram.types import Message
+
+load_dotenv()
 
 TOKEN = environ["BOT_TOKEN"]
 dp = Dispatcher()
@@ -38,7 +42,11 @@ async def main() -> None:
     # And the run events dispatching
     await dp.start_polling(bot) 
 
+def shutdown():
+    print("Bot stopped gracefully")
+    sys.exit(0)
 
 if __name__ == "__main__":
+    signal.signal(signal.SIGINT, lambda s, f: shutdown())
     logging.basicConfig(level=logging.INFO, stream=sys.stdout)
     asyncio.run(main())
