@@ -1,5 +1,4 @@
 import asyncio
-from dotenv import load_dotenv 
 import logging
 import signal
 import sys
@@ -12,7 +11,12 @@ from aiogram.enums import ParseMode
 from aiogram.filters import CommandStart
 from aiogram.types import Message
 
-load_dotenv()
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass 
+
 
 TOKEN = getenv("BOT_TOKEN")
 if TOKEN is None:
