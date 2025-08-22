@@ -21,4 +21,4 @@ RUN useradd -m -u 1000 botuser && chown -R botuser:botuser /app
 USER botuser
 
 # Запускаем бота
-CMD ["python", "webhook.py"]
+CMD ["python", "main.py"]
